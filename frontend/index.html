@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CardioScan · Heart Disease Risk Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet_ids.css">
+</head>
+
+<body>
+
+    <div class="shell">
+
+        <!-- ── Header ── -->
+        <header>
+            <div class="pulse-icon">❤️</div>
+            <h1><em>CardioScan</em></h1>
+            <p class="tagline">Heart Disease Risk Assessment · Logistic Regression</p>
+
+            <!-- Mode toggle -->
+            <div class="mode-toggle" id="modeToggle">
+                <div class="mode-pill basic" id="modePill"></div>
+                <button class="mode-btn active-basic" id="btnBasic" onclick="setMode('basic')">
+                    <h3>🏠 Basic</h3>
+                    <span class="badge badge-basic">5 features</span>
+                </button>
+                <button class="mode-btn" id="btnAdvanced" onclick="setMode('advanced')">
+                    <h3>🔬 Advanced</h3>
+                    <span class="badge badge-advanced">8 features</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ── Card ── -->
+        <div class="card mode-basic" id="mainCard">
+
+            <!-- Info banner -->
+            <div class="info-banner basic" id="infoBanner">
+                <strong>Basic Mode</strong> — Fill in details you know from daily life. No medical reports needed.
+            </div>
+
+            <p class="section-label basic" id="sectionLabel">Common Patient Details</p>
+
+            <!-- ── Shared fields (always visible) ── -->
+            <div class="grid">
+
+                <div class="field">
+                    <label>Gender</label>
+                    <select id="Sex">
+                        <option value="">Select…</option>
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Age</label>
+                    <input type="number" id="Age">
+                </div>
+
+                <div class="field">
+                    <label>Chest Pain Type</label>
+                    <select id="ChestPainType">
+                        <option value="">Select…</option>
+                        <option value="0">ASY – Asymptomatic <h5>(🟢No Chest Pain)</h5>
+                        </option>
+                        <option value="1">ATA – Atypical Angina <h5>(🟡Mild Chest Discomfort)</h5>
+                        </option>
+                        <option value="2">NAP – Non-Anginal <h5>(🟠Moderate Chest Pain)</h5>
+                        </option>
+                        <option value="3">TA – Typical Angina <h5>(🔴Severe Chest Pain)</h5>
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Fasting Blood Sugar</label>
+                    <select id="FastingBS">
+                        <option value="">Select…</option>
+                        <option value="0">≤ 120 mg/dl (Normal)</option>
+                        <option value="1">&gt; 120 mg/dl (High)</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Exercise-Induced Angina</label>
+                    <select id="ExerciseAngina">
+                        <option value="">Select…</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="field full">
+                    <label>Resting Blood Pressure <span class="hint">(mm Hg)</span></label>
+                    <input type="number" id="RestingBP" placeholder="e.g. 120" min="60" max="250">
+                </div>
+
+            </div>
+
+            <!-- ── Advanced extra fields ── -->
+            <div class="advanced-fields" id="advancedFields">
+                <div class="adv-divider"><span>🔬 Clinical Report Fields</span></div>
+
+                <div class="grid">
+
+                    <div class="field">
+                        <label>Max Heart Rate <span class="hint">(bpm)</span></label>
+                        <input type="number" id="MaxHR" placeholder="e.g. 150" min="60" max="220">
+                    </div>
+
+                    <div class="field">
+                        <label>ST Slope <span class="hint">(ECG)</span></label>
+                        <select id="ST_Slope">
+                            <option value="">Select…</option>
+                            <option value="0">Down</option>
+                            <option value="1">Flat</option>
+                            <option value="2">Up</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Cholesterol<span class="hint">(mg/dL)</span></label>
+                        <input type="number" id="Cholesterol" placeholder="e.g. 150" min="90" max="600">
+                    </div>
+
+                    <div class="field full">
+                        <label>Oldpeak — ST Depression <span class="hint">–2.6 to 6.2</span></label>
+                        <div class="slider-wrap">
+                            <input type="range" id="Oldpeak" min="-2.6" max="6.2" step="0.1" value="0"
+                                oninput="document.getElementById('oldpeak-val').textContent=parseFloat(this.value).toFixed(1)">
+                            <span class="slider-val" id="oldpeak-val">0.0</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- /advanced-fields -->
+
+            <hr class="divider">
+
+            <button class="predict-btn basic" id="predictBtn" onclick="runPrediction()">
+                Analyse Risk
+            </button>
+
+            <div class="error-msg" id="errorMsg"></div>
+
+            <div id="result">
+                <div class="result-mode-tag basic" id="resultModeTag">Basic Mode</div>
+                <div class="result-label" id="resultLabel"></div>
+                <div class="result-prob" id="resultProb"></div>
+                <div class="gauge-track">
+                    <div class="gauge-fill" id="gaugeFill"></div>
+                </div>
+            </div>
+
+        </div><!-- /card -->
+
+        <p class="footer-note">For educational purposes only · Not a substitute for professional medical advice.</p>
+
+    </div><!-- /shell -->
+
+    <script>
+        const API = "http://127.0.0.1:8000";
+        let currentMode = "basic";
+
+        // ── Mode switching ────────────────────────────────
+
+        function setMode(mode) {
+            currentMode = mode;
+            const isAdv = mode === "advanced";
+
+            // Toggle pill position
+            const pill = document.getElementById("modePill");
+            const btnB = document.getElementById("btnBasic");
+            const btnA = document.getElementById("btnAdvanced");
+            const btnAdv = btnA.getBoundingClientRect();
+            const btnBas = btnB.getBoundingClientRect();
+            const toggle = document.getElementById("modeToggle").getBoundingClientRect();
+
+            pill.className = `mode-pill ${mode}`;
+            if (isAdv) {
+                pill.style.left = (btnAdv.left - toggle.left + 5) + "px";
+                pill.style.width = (btnAdv.width - 10) + "px";
+            } else {
+                pill.style.left = (btnBas.left - toggle.left + 5) + "px";
+                pill.style.width = (btnBas.width - 10) + "px";
+            }
+
+            // Button states
+            btnB.className = isAdv ? "mode-btn" : "mode-btn active-basic";
+            btnA.className = isAdv ? "mode-btn active-advanced" : "mode-btn";
+
+            // Card border & class
+            const card = document.getElementById("mainCard");
+            card.className = isAdv ? "card mode-advanced" : "card mode-basic";
+
+            // Info banner
+            const banner = document.getElementById("infoBanner");
+            if (isAdv) {
+                banner.className = "info-banner advanced";
+                banner.innerHTML = "<strong>Advanced Mode</strong> — Include clinical report data (MaxHR, ST Slope, Oldpeak) for a more accurate prediction.";
+            } else {
+                banner.className = "info-banner basic";
+                banner.innerHTML = "<strong>Basic Mode</strong> — Fill in details you know from daily life. No medical reports needed.";
+            }
+
+            // Section label
+            const lbl = document.getElementById("sectionLabel");
+            lbl.className = isAdv ? "section-label advanced" : "section-label basic";
+            lbl.textContent = isAdv ? "Patient Details + Clinical Data" : "Common Patient Details";
+
+            // Advanced fields
+            document.getElementById("advancedFields").className =
+                isAdv ? "advanced-fields visible" : "advanced-fields";
+
+            // Button
+            const btn = document.getElementById("predictBtn");
+            btn.className = isAdv ? "predict-btn advanced" : "predict-btn basic";
+
+            // Hide previous result
+            document.getElementById("result").style.display = "none";
+            document.getElementById("errorMsg").style.display = "none";
+        }
+
+        // Init pill position after render
+        window.addEventListener("load", () => {
+            setTimeout(() => setMode("basic"), 50);
+        });
+
+
+        // ── Prediction ────────────────────────────────────
+
+        async function runPrediction() {
+            const btn = document.getElementById("predictBtn");
+            const err = document.getElementById("errorMsg");
+            const res = document.getElementById("result");
+
+            err.style.display = "none";
+            res.style.display = "none";
+
+            // ── Collect shared fields
+            const shared = {
+                Sex: document.getElementById("Sex").value,
+                Age: document.getElementById("Age").value,
+                ChestPainType: document.getElementById("ChestPainType").value,
+                FastingBS: document.getElementById("FastingBS").value,
+                ExerciseAngina: document.getElementById("ExerciseAngina").value,
+                RestingBP: document.getElementById("RestingBP").value,
+            };
+
+            for (const [k, v] of Object.entries(shared)) {
+                if (v === "") {
+                    showError(`⚠ Please fill in all fields (missing: ${k.replace(/([A-Z])/g, ' $1').trim()}).`);
+                    return;
+                }
+            }
+
+            const bp = parseInt(shared.RestingBP);
+            if (isNaN(bp) || bp < 60 || bp > 250) {
+                showError("⚠ Enter a valid Resting BP between 60 and 250 mm Hg.");
+                return;
+            }
+
+            let payload = {
+                Sex: parseInt(shared.Sex),
+                Age: parseInt(shared.Age),
+                ChestPainType: parseInt(shared.ChestPainType),
+                FastingBS: parseInt(shared.FastingBS),
+                ExerciseAngina: parseInt(shared.ExerciseAngina),
+                RestingBP: bp,
+            };
+
+            let endpoint = "/predict/basic";
+
+            // ── FIX 1: Advanced validation & payload moved entirely inside this block.
+            // ── FIX 2: `chole` is now declared here before use, not referenced outside.
+            if (currentMode === "advanced") {
+                endpoint = "/predict/advanced";
+
+                const maxhr = document.getElementById("MaxHR").value;
+                const stslope = document.getElementById("ST_Slope").value;
+                const chole = document.getElementById("Cholesterol").value;  // declared here
+                const oldpeak = document.getElementById("Oldpeak").value;
+
+                if (maxhr === "" || stslope === "" || chole === "") {
+                    showError("⚠ Please fill in all Advanced fields (MaxHR, ST Slope, and Cholesterol).");
+                    return;
+                }
+
+                const hr = parseInt(maxhr);
+                if (isNaN(hr) || hr < 60 || hr > 220) {
+                    showError("⚠ Enter a valid Max Heart Rate between 60 and 220 bpm.");
+                    return;
+                }
+
+                // ── FIX 3: Cholesterol validation now correctly inside the advanced block
+                const choleNum = parseInt(chole);
+                if (isNaN(choleNum) || choleNum < 0 || choleNum > 600) {
+                    showError("⚠ Enter valid Cholesterol (0–600 mg/dL).");
+                    return;
+                }
+
+                payload = {
+                    ...payload,
+                    MaxHR: hr,
+                    ST_Slope: parseInt(stslope),
+                    Cholesterol: choleNum,
+                    Oldpeak: parseFloat(oldpeak),
+                };
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Analysing…';
+
+            try {
+                const resp = await fetch(`${API}${endpoint}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                });
+                if (!resp.ok) throw new Error(`Server error ${resp.status}`);
+                const data = await resp.json();
+
+                const high = data.prediction === 1;
+                res.className = high ? "high" : "low";
+
+                document.getElementById("resultModeTag").className =
+                    `result-mode-tag ${currentMode}`;
+                document.getElementById("resultModeTag").textContent =
+                    currentMode === "advanced" ? "Advanced Mode" : "Basic Mode";
+
+                document.getElementById("resultLabel").textContent = data.label;
+                document.getElementById("resultProb").textContent =
+                    `Estimated probability: ${data.probability}%`;
+
+                document.getElementById("gaugeFill").style.width = "0%";
+                res.style.display = "block";
+                setTimeout(() => {
+                    document.getElementById("gaugeFill").style.width = data.probability + "%";
+                }, 60);
+
+            } catch (e) {
+                showError(`⚠ Could not reach the API at ${API}. Make sure FastAPI is running. (${e.message})`);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = "Analyse Risk";
+            }
+        }
+
+        function showError(msg) {
+            const err = document.getElementById("errorMsg");
+            err.textContent = msg;
+            err.style.display = "block";
+        }
+    </script>
+
+</body>
+
+</html>
