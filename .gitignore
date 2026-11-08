@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment & credentials
+.env
+.env.*
+
+# Logs
+*.log
+
+# Operating system & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Legacy unused model artifacts
+model_artifacts/
+backend/model_artifacts/
