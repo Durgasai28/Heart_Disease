@@ -246,7 +246,7 @@
         // Automatically connect to FastAPI (port 8000) when running from VS Code Live Server (port 5500) or file://,
         // or use the current host origin when served directly by FastAPI.
         const isLiveServerOrFile = !window.location.protocol.startsWith("http") || window.location.port === "5500";
-        const API = isLiveServerOrFile ? "http://127.0.0.1:8000" : window.location.origin;
+        const API = isLiveServerOrFile ? "http://127.0.0.1:8000" : "https://heart-disease-pwe6.onrender.com";;
 
         let currentMode = "basic";
 
