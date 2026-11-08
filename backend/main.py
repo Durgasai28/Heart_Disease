@@ -185,8 +185,8 @@ def get_model(features: list, save_path: str, label: str) -> dict:
         "accuracy": accuracy,
     }
 
-    joblib.dump(bundle, save_path)
-    log.info(f"[{label}] Model bundle saved to '{save_path}'")
+    joblib.dump(bundle, save_path, compress=3)
+    log.info(f"[{label}] Model bundle saved to '{save_path}' (compressed)")
     return bundle
 
 # ─── Load / train models at startup ──────────────────
