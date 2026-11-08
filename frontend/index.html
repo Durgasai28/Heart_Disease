@@ -20,18 +20,18 @@
         <header>
             <div class="pulse-icon">❤️</div>
             <h1><em>CardioScan</em></h1>
-            <p class="tagline">Heart Disease Risk Assessment · Logistic Regression</p>
+            <p class="tagline">Cardiovascular Disease Risk Assessment · Dual-Mode Clinical AI</p>
 
             <!-- Mode toggle -->
             <div class="mode-toggle" id="modeToggle">
                 <div class="mode-pill basic" id="modePill"></div>
                 <button class="mode-btn active-basic" id="btnBasic" onclick="setMode('basic')">
                     <h3>🏠 Basic</h3>
-                    <span class="badge badge-basic">5 features</span>
+                    <span class="badge badge-basic">12 features</span>
                 </button>
                 <button class="mode-btn" id="btnAdvanced" onclick="setMode('advanced')">
                     <h3>🔬 Advanced</h3>
-                    <span class="badge badge-advanced">8 features</span>
+                    <span class="badge badge-advanced">20 features</span>
                 </button>
             </div>
         </header>
@@ -41,17 +41,17 @@
 
             <!-- Info banner -->
             <div class="info-banner basic" id="infoBanner">
-                <strong>Basic Mode</strong> — Fill in details you know from daily life. No medical reports needed.
+                <strong>Basic Mode</strong> — Everyday lifestyle and physiological indicators. No laboratory tests required.
             </div>
 
-            <p class="section-label basic" id="sectionLabel">Common Patient Details</p>
+            <p class="section-label basic" id="sectionLabel">Common Lifestyle & Patient Details (12 Features)</p>
 
             <!-- ── Shared fields (always visible) ── -->
             <div class="grid">
 
                 <div class="field">
                     <label>Gender</label>
-                    <select id="Sex">
+                    <select id="Gender">
                         <option value="">Select…</option>
                         <option value="0">Male</option>
                         <option value="1">Female</option>
@@ -59,82 +59,158 @@
                 </div>
 
                 <div class="field">
-                    <label>Age</label>
-                    <input type="number" id="Age">
+                    <label>Age <span class="hint">(years)</span></label>
+                    <input type="number" id="Age" placeholder="e.g. 50" min="18" max="100">
                 </div>
 
                 <div class="field">
-                    <label>Chest Pain Type</label>
-                    <select id="ChestPainType">
+                    <label>Blood Pressure <span class="hint">(Systolic mm Hg)</span></label>
+                    <input type="number" id="BloodPressure" placeholder="e.g. 135" min="80" max="240">
+                </div>
+
+                <div class="field">
+                    <label>BMI <span class="hint">(kg/m²)</span></label>
+                    <input type="number" step="0.1" id="BMI" placeholder="e.g. 26.5" min="10" max="60">
+                </div>
+
+                <div class="field">
+                    <label>Exercise Habits</label>
+                    <select id="ExerciseHabits">
                         <option value="">Select…</option>
-                        <option value="0">ASY – Asymptomatic <h5>(🟢No Chest Pain)</h5>
-                        </option>
-                        <option value="1">ATA – Atypical Angina <h5>(🟡Mild Chest Discomfort)</h5>
-                        </option>
-                        <option value="2">NAP – Non-Anginal <h5>(🟠Moderate Chest Pain)</h5>
-                        </option>
-                        <option value="3">TA – Typical Angina <h5>(🔴Severe Chest Pain)</h5>
-                        </option>
+                        <option value="0">Low (Sedentary / Minimal)</option>
+                        <option value="1">Medium (Moderate Activity)</option>
+                        <option value="2">High (Regular Intense Exercise)</option>
                     </select>
                 </div>
 
                 <div class="field">
-                    <label>Fasting Blood Sugar</label>
-                    <select id="FastingBS">
+                    <label>Smoking Status</label>
+                    <select id="Smoking">
                         <option value="">Select…</option>
-                        <option value="0">≤ 120 mg/dl (Normal)</option>
-                        <option value="1">&gt; 120 mg/dl (High)</option>
+                        <option value="0">No (Non-smoker)</option>
+                        <option value="1">Yes (Active / Regular)</option>
                     </select>
                 </div>
 
                 <div class="field">
-                    <label>Exercise-Induced Angina</label>
-                    <select id="ExerciseAngina">
+                    <label>Family Heart Disease</label>
+                    <select id="FamilyHeartDisease">
+                        <option value="">Select…</option>
+                        <option value="0">No History</option>
+                        <option value="1">Yes (Family History)</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Diabetes</label>
+                    <select id="Diabetes">
                         <option value="">Select…</option>
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </select>
                 </div>
 
-                <div class="field full">
-                    <label>Resting Blood Pressure <span class="hint">(mm Hg)</span></label>
-                    <input type="number" id="RestingBP" placeholder="e.g. 120" min="60" max="250">
+                <div class="field">
+                    <label>Alcohol Consumption</label>
+                    <select id="AlcoholConsumption">
+                        <option value="">Select…</option>
+                        <option value="0">None</option>
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">High</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Stress Level</label>
+                    <select id="StressLevel">
+                        <option value="">Select…</option>
+                        <option value="0">Low</option>
+                        <option value="1">Medium</option>
+                        <option value="2">High</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Sleep Hours <span class="hint">(hours/night)</span></label>
+                    <input type="number" step="0.5" id="SleepHours" placeholder="e.g. 7.0" min="2" max="16">
+                </div>
+
+                <div class="field">
+                    <label>Sugar Consumption</label>
+                    <select id="SugarConsumption">
+                        <option value="">Select…</option>
+                        <option value="0">Low</option>
+                        <option value="1">Medium</option>
+                        <option value="2">High</option>
+                    </select>
                 </div>
 
             </div>
 
             <!-- ── Advanced extra fields ── -->
             <div class="advanced-fields" id="advancedFields">
-                <div class="adv-divider"><span>🔬 Clinical Report Fields</span></div>
+                <div class="adv-divider"><span>🔬 Clinical & Laboratory Report Fields (+8 Features)</span></div>
 
                 <div class="grid">
 
                     <div class="field">
-                        <label>Max Heart Rate <span class="hint">(bpm)</span></label>
-                        <input type="number" id="MaxHR" placeholder="e.g. 150" min="60" max="220">
+                        <label>Cholesterol Level <span class="hint">(mg/dL)</span></label>
+                        <input type="number" id="CholesterolLevel" placeholder="e.g. 210" min="100" max="500">
                     </div>
 
                     <div class="field">
-                        <label>ST Slope <span class="hint">(ECG)</span></label>
-                        <select id="ST_Slope">
+                        <label>Triglyceride Level <span class="hint">(mg/dL)</span></label>
+                        <input type="number" id="TriglycerideLevel" placeholder="e.g. 180" min="50" max="600">
+                    </div>
+
+                    <div class="field">
+                        <label>Fasting Blood Sugar <span class="hint">(mg/dL)</span></label>
+                        <input type="number" id="FastingBloodSugar" placeholder="e.g. 110" min="50" max="300">
+                    </div>
+
+                    <div class="field">
+                        <label>High Blood Pressure <span class="hint">(Diagnosed)</span></label>
+                        <select id="HighBloodPressure">
                             <option value="">Select…</option>
-                            <option value="0">Down</option>
-                            <option value="1">Flat</option>
-                            <option value="2">Up</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes (Hypertension)</option>
                         </select>
                     </div>
 
                     <div class="field">
-                        <label>Cholesterol<span class="hint">(mg/dL)</span></label>
-                        <input type="number" id="Cholesterol" placeholder="e.g. 150" min="90" max="600">
+                        <label>Low HDL Cholesterol</label>
+                        <select id="LowHDLCholesterol">
+                            <option value="">Select…</option>
+                            <option value="0">No (Normal HDL ≥ 40 mg/dL)</option>
+                            <option value="1">Yes (Low HDL &lt; 40 mg/dL)</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>High LDL Cholesterol</label>
+                        <select id="HighLDLCholesterol">
+                            <option value="">Select…</option>
+                            <option value="0">No (Optimal &lt; 130 mg/dL)</option>
+                            <option value="1">Yes (Elevated LDL ≥ 130 mg/dL)</option>
+                        </select>
                     </div>
 
                     <div class="field full">
-                        <label>Oldpeak — ST Depression <span class="hint">–2.6 to 6.2</span></label>
+                        <label>CRP Level — Inflammatory Marker <span class="hint">(0.0 to 15.0 mg/L)</span></label>
                         <div class="slider-wrap">
-                            <input type="range" id="Oldpeak" min="-2.6" max="6.2" step="0.1" value="0"
-                                oninput="document.getElementById('oldpeak-val').textContent=parseFloat(this.value).toFixed(1)">
-                            <span class="slider-val" id="oldpeak-val">0.0</span>
+                            <input type="range" id="CRPLevel" min="0" max="15" step="0.1" value="7.5"
+                                oninput="document.getElementById('crp-val').textContent=parseFloat(this.value).toFixed(1)">
+                            <span class="slider-val" id="crp-val">7.5</span>
+                        </div>
+                    </div>
+
+                    <div class="field full">
+                        <label>Homocysteine Level <span class="hint">(5.0 to 20.0 µmol/L)</span></label>
+                        <div class="slider-wrap">
+                            <input type="range" id="HomocysteineLevel" min="5.0" max="20.0" step="0.1" value="12.5"
+                                oninput="document.getElementById('homocysteine-val').textContent=parseFloat(this.value).toFixed(1)">
+                            <span class="slider-val" id="homocysteine-val">12.5</span>
                         </div>
                     </div>
 
@@ -160,12 +236,16 @@
 
         </div><!-- /card -->
 
-        <p class="footer-note">For educational purposes only · Not a substitute for professional medical advice.</p>
+        <p class="footer-note">For educational & clinical screening purposes only · Not a substitute for professional medical advice.</p>
 
     </div><!-- /shell -->
 
     <script>
-        const API = "https://heart-disease-pwe6.onrender.com";
+        // Automatically connect to FastAPI (port 8000) when running from VS Code Live Server (port 5500) or file://,
+        // or use the current host origin when served directly by FastAPI.
+        const isLiveServerOrFile = !window.location.protocol.startsWith("http") || window.location.port === "5500";
+        const API = isLiveServerOrFile ? "http://127.0.0.1:8000" : window.location.origin;
+
         let currentMode = "basic";
 
         // ── Mode switching ────────────────────────────────
@@ -203,16 +283,18 @@
             const banner = document.getElementById("infoBanner");
             if (isAdv) {
                 banner.className = "info-banner advanced";
-                banner.innerHTML = "<strong>Advanced Mode</strong> — Include clinical report data (MaxHR, ST Slope, Oldpeak) for a more accurate prediction.";
+                banner.innerHTML = "<strong>Advanced Mode</strong> — Comprehensive assessment including lipid profile, inflammatory markers (CRP, Homocysteine), and clinical diagnoses.";
             } else {
                 banner.className = "info-banner basic";
-                banner.innerHTML = "<strong>Basic Mode</strong> — Fill in details you know from daily life. No medical reports needed.";
+                banner.innerHTML = "<strong>Basic Mode</strong> — Everyday lifestyle and physiological indicators. No laboratory tests required.";
             }
 
             // Section label
             const lbl = document.getElementById("sectionLabel");
             lbl.className = isAdv ? "section-label advanced" : "section-label basic";
-            lbl.textContent = isAdv ? "Patient Details + Clinical Data" : "Common Patient Details";
+            lbl.textContent = isAdv
+                ? "Patient Profile + Comprehensive Clinical & Lab Markers (20 Features)"
+                : "Common Lifestyle & Patient Details (12 Features)";
 
             // Advanced fields
             document.getElementById("advancedFields").className =
@@ -232,6 +314,9 @@
             setTimeout(() => setMode("basic"), 50);
         });
 
+        window.addEventListener("resize", () => {
+            setMode(currentMode);
+        });
 
         // ── Prediction ────────────────────────────────────
 
@@ -243,74 +328,118 @@
             err.style.display = "none";
             res.style.display = "none";
 
-            // ── Collect shared fields
-            const shared = {
-                Sex: document.getElementById("Sex").value,
-                Age: document.getElementById("Age").value,
-                ChestPainType: document.getElementById("ChestPainType").value,
-                FastingBS: document.getElementById("FastingBS").value,
-                ExerciseAngina: document.getElementById("ExerciseAngina").value,
-                RestingBP: document.getElementById("RestingBP").value,
-            };
+            // ── Collect basic fields (12 features)
+            const basicIds = [
+                "Gender", "Age", "BloodPressure", "BMI", "ExerciseHabits",
+                "Smoking", "FamilyHeartDisease", "Diabetes", "AlcoholConsumption",
+                "StressLevel", "SleepHours", "SugarConsumption"
+            ];
 
-            for (const [k, v] of Object.entries(shared)) {
-                if (v === "") {
-                    showError(`⚠ Please fill in all fields (missing: ${k.replace(/([A-Z])/g, ' $1').trim()}).`);
+            const basicData = {};
+            for (const id of basicIds) {
+                const val = document.getElementById(id).value.trim();
+                if (val === "") {
+                    showError(`⚠ Please fill in all Basic fields (missing: ${id.replace(/([A-Z])/g, ' $1').trim()}).`);
                     return;
                 }
+                basicData[id] = val;
             }
 
-            const bp = parseInt(shared.RestingBP);
-            if (isNaN(bp) || bp < 60 || bp > 250) {
-                showError("⚠ Enter a valid Resting BP between 60 and 250 mm Hg.");
+            // Numeric range validations
+            const age = parseFloat(basicData.Age);
+            if (isNaN(age) || age < 18 || age > 100) {
+                showError("⚠ Age must be between 18 and 100 years.");
+                return;
+            }
+
+            const bp = parseFloat(basicData.BloodPressure);
+            if (isNaN(bp) || bp < 80 || bp > 240) {
+                showError("⚠ Enter a valid Systolic Blood Pressure between 80 and 240 mm Hg.");
+                return;
+            }
+
+            const bmi = parseFloat(basicData.BMI);
+            if (isNaN(bmi) || bmi < 10 || bmi > 60) {
+                showError("⚠ Enter a valid BMI between 10.0 and 60.0 kg/m².");
+                return;
+            }
+
+            const sleep = parseFloat(basicData.SleepHours);
+            if (isNaN(sleep) || sleep < 2 || sleep > 16) {
+                showError("⚠ Enter valid nightly Sleep Hours between 2.0 and 16.0 hours.");
                 return;
             }
 
             let payload = {
-                Sex: parseInt(shared.Sex),
-                Age: parseInt(shared.Age),
-                ChestPainType: parseInt(shared.ChestPainType),
-                FastingBS: parseInt(shared.FastingBS),
-                ExerciseAngina: parseInt(shared.ExerciseAngina),
-                RestingBP: bp,
+                Gender: parseInt(basicData.Gender),
+                Age: age,
+                BloodPressure: bp,
+                BMI: bmi,
+                ExerciseHabits: parseInt(basicData.ExerciseHabits),
+                Smoking: parseInt(basicData.Smoking),
+                FamilyHeartDisease: parseInt(basicData.FamilyHeartDisease),
+                Diabetes: parseInt(basicData.Diabetes),
+                AlcoholConsumption: parseInt(basicData.AlcoholConsumption),
+                StressLevel: parseInt(basicData.StressLevel),
+                SleepHours: sleep,
+                SugarConsumption: parseInt(basicData.SugarConsumption)
             };
 
             let endpoint = "/predict/basic";
 
-            // ── FIX 1: Advanced validation & payload moved entirely inside this block.
-            // ── FIX 2: `chole` is now declared here before use, not referenced outside.
+            // ── Advanced validation & payload (+8 features)
             if (currentMode === "advanced") {
                 endpoint = "/predict/advanced";
 
-                const maxhr = document.getElementById("MaxHR").value;
-                const stslope = document.getElementById("ST_Slope").value;
-                const chole = document.getElementById("Cholesterol").value;  // declared here
-                const oldpeak = document.getElementById("Oldpeak").value;
+                const advSelectIds = ["HighBloodPressure", "LowHDLCholesterol", "HighLDLCholesterol"];
+                for (const id of advSelectIds) {
+                    const val = document.getElementById(id).value.trim();
+                    if (val === "") {
+                        showError(`⚠ Please select an option for ${id.replace(/([A-Z])/g, ' $1').trim()}.`);
+                        return;
+                    }
+                }
 
-                if (maxhr === "" || stslope === "" || chole === "") {
-                    showError("⚠ Please fill in all Advanced fields (MaxHR, ST Slope, and Cholesterol).");
+                const cholVal = document.getElementById("CholesterolLevel").value.trim();
+                const trigVal = document.getElementById("TriglycerideLevel").value.trim();
+                const fbsVal = document.getElementById("FastingBloodSugar").value.trim();
+
+                if (cholVal === "" || trigVal === "" || fbsVal === "") {
+                    showError("⚠ Please fill in all Clinical Lab fields (Cholesterol, Triglycerides, Fasting Blood Sugar).");
                     return;
                 }
 
-                const hr = parseInt(maxhr);
-                if (isNaN(hr) || hr < 60 || hr > 220) {
-                    showError("⚠ Enter a valid Max Heart Rate between 60 and 220 bpm.");
+                const chol = parseFloat(cholVal);
+                if (isNaN(chol) || chol < 100 || chol > 500) {
+                    showError("⚠ Cholesterol Level must be between 100 and 500 mg/dL.");
                     return;
                 }
 
-                // ── FIX 3: Cholesterol validation now correctly inside the advanced block
-                const choleNum = parseInt(chole);
-                if (isNaN(choleNum) || choleNum < 0 || choleNum > 600) {
-                    showError("⚠ Enter valid Cholesterol (0–600 mg/dL).");
+                const trig = parseFloat(trigVal);
+                if (isNaN(trig) || trig < 50 || trig > 600) {
+                    showError("⚠ Triglyceride Level must be between 50 and 600 mg/dL.");
                     return;
                 }
+
+                const fbs = parseFloat(fbsVal);
+                if (isNaN(fbs) || fbs < 50 || fbs > 300) {
+                    showError("⚠ Fasting Blood Sugar must be between 50 and 300 mg/dL.");
+                    return;
+                }
+
+                const crp = parseFloat(document.getElementById("CRPLevel").value);
+                const homocysteine = parseFloat(document.getElementById("HomocysteineLevel").value);
 
                 payload = {
                     ...payload,
-                    MaxHR: hr,
-                    ST_Slope: parseInt(stslope),
-                    Cholesterol: choleNum,
-                    Oldpeak: parseFloat(oldpeak),
+                    CholesterolLevel: chol,
+                    TriglycerideLevel: trig,
+                    FastingBloodSugar: fbs,
+                    HighBloodPressure: parseInt(document.getElementById("HighBloodPressure").value),
+                    LowHDLCholesterol: parseInt(document.getElementById("LowHDLCholesterol").value),
+                    HighLDLCholesterol: parseInt(document.getElementById("HighLDLCholesterol").value),
+                    CRPLevel: isNaN(crp) ? 7.5 : crp,
+                    HomocysteineLevel: isNaN(homocysteine) ? 12.5 : homocysteine
                 };
             }
 
@@ -323,20 +452,25 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload),
                 });
-                if (!resp.ok) throw new Error(`Server error ${resp.status}`);
+
+                if (!resp.ok) {
+                    const errorDetail = await resp.json().catch(() => null);
+                    throw new Error(errorDetail?.detail || `Server returned ${resp.status}`);
+                }
+
                 const data = await resp.json();
 
-                const high = data.prediction === 1;
-                res.className = high ? "high" : "low";
+                const isHigh = data.prediction === 1;
+                res.className = isHigh ? "high" : "low";
 
                 document.getElementById("resultModeTag").className =
                     `result-mode-tag ${currentMode}`;
                 document.getElementById("resultModeTag").textContent =
-                    currentMode === "advanced" ? "Advanced Mode" : "Basic Mode";
+                    currentMode === "advanced" ? "Advanced Mode (20 Features)" : "Basic Mode (12 Features)";
 
                 document.getElementById("resultLabel").textContent = data.label;
                 document.getElementById("resultProb").textContent =
-                    `Estimated probability: ${data.probability}%`;
+                    `Estimated Cardiovascular Risk: ${data.probability}% (${data.risk_level})`;
 
                 document.getElementById("gaugeFill").style.width = "0%";
                 res.style.display = "block";

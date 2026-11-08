@@ -55,7 +55,7 @@ body::before {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 560px;
+    max-width: 640px;
 }
 
 /* ── Header ── */
@@ -208,7 +208,8 @@ h1 em {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 30px;
-    width: 600px;
+    width: 100%;
+    max-width: 640px;
     margin-top: 24px;
     transition: border-color .3s;
 }
@@ -345,7 +346,7 @@ option {
     flex: 1;
     padding: 0;
     height: 36px;
-    -webkit-appearance: none;
+    appearance: none;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -391,7 +392,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .advanced-fields.visible {
-    max-height: 600px;
+    max-height: 1200px;
     opacity: 1;
     margin-top: 18px;
 }
